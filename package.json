@@ -1,0 +1,114 @@
+{
+  "name": "maxkit",
+  "private": true,
+  "version": "0.4.1",
+  "type": "module",
+  "main": "electron/main.mjs",
+  "description": "MaxKit - 图片、GIF、PDF、办公文档、视频与音频处理全部在本地电脑完成",
+  "scripts": {
+    "copy-assets": "node scripts/copy-local-assets.mjs",
+    "predev": "node scripts/copy-local-assets.mjs",
+    "dev": "vite",
+    "prebuild": "node scripts/copy-local-assets.mjs",
+    "build": "tsc --noEmit && vite build",
+    "desktop:prepare": "npm run build && node scripts/prepare-electron-dist.cjs",
+    "desktop:portable": "npm run desktop:prepare && electron-builder --win portable --x64",
+    "desktop:zip": "npm run desktop:prepare && electron-builder --win zip --x64",
+    "desktop:dist": "npm run desktop:prepare && electron-builder --win portable zip --x64",
+    "desktop:smoke": "node scripts/smoke-electron.mjs",
+    "desktop:pdf-smoke": "node scripts/smoke-electron-pdf.mjs",
+    "desktop:feature-smoke": "node scripts/smoke-electron-features.mjs",
+    "desktop:office-smoke": "node scripts/smoke-electron-office.mjs",
+    "desktop:office-download-smoke": "node scripts/smoke-office-download.mjs",
+    "preview": "vite preview",
+    "fetch-ai-model": "node scripts/fetch-ai-model.mjs",
+    "prepare-office-engine": "node scripts/fetch-libreoffice.mjs && node scripts/extract-libreoffice.mjs && node scripts/prepare-libreoffice.mjs",
+    "test": "playwright test",
+    "test:ai": "RUN_AI=1 playwright test tests/ai.spec.ts",
+    "test:network": "playwright test tests/network.spec.ts"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "@imgly/background-removal": "^1.7.0",
+    "exifr": "^7.1.3",
+    "jszip": "^3.10.1",
+    "onnxruntime-web": "1.21.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.4.624",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.17.0"
+  },
+  "devDependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@imgly/background-removal-data": "^1.4.5",
+    "@playwright/test": "^1.59.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "electron": "^44.3.0",
+    "electron-builder": "^26.15.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16"
+  },
+  "build": {
+    "appId": "org.maxkit.desktop",
+    "productName": "MaxKit",
+    "copyright": "Copyright © 2026 扣丁图片",
+    "asar": false,
+    "npmRebuild": false,
+    "electronDist": ".electron-dist-clean",
+    "afterPack": "scripts/after-pack.cjs",
+    "compression": "normal",
+    "directories": {
+      "output": "release-maxkit-0.4.1"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json",
+      "LICENSE",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "LICENSE",
+        "to": "licenses/HahaImage-MIT-LICENSE.txt"
+      },
+      {
+        "from": "node_modules/@imgly/background-removal/LICENSE.md",
+        "to": "licenses/IMG.LY-AGPL-LICENSE.md"
+      },
+      {
+        "from": "node_modules/@imgly/background-removal/ThirdPartyLicenses.json",
+        "to": "licenses/IMG.LY-ThirdPartyLicenses.json"
+      },
+      {
+        "from": "node_modules/@imgly/background-removal-data/LICENSE.md",
+        "to": "licenses/IMG.LY-Model-AGPL-LICENSE.md"
+      },
+      {
+        "from": "node_modules/@imgly/background-removal-data/ThirdPartyLicenses.json",
+        "to": "licenses/IMG.LY-Model-ThirdPartyLicenses.json"
+      },
+      {
+        "from": "node_modules/pdfjs-dist/LICENSE",
+        "to": "licenses/PDF.js-Apache-2.0-LICENSE.txt"
+      }
+    ],
+    "extraFiles": [
+      {
+        "from": "使用说明.txt",
+        "to": "使用说明.txt"
+      }
+    ],
+    "artifactName": "MaxKit-${version}.${ext}",
+    "win": {
+      "target": [
+        "portable",
+        "zip"
+      ]
+    }
+  }
+}

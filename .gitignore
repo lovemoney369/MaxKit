@@ -1,0 +1,27 @@
+node_modules
+dist
+*.local
+.DS_Store
+npm-debug.log*
+test-results
+playwright-report
+.npm-cache/
+.playwright-browsers/
+.electron-builder-cache/
+.electron-dist-clean/
+release/
+release-*/
+data/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Claude 运行时文件
+.claude/
+.agents/
+
+# 构建时从 node_modules 复制的本地化静态资源（不入库，避免大文件污染 git）
+public/ffmpeg/
+public/imgly/

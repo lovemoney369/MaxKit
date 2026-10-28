@@ -1,0 +1,19 @@
+{
+  "name": "MaxKit",
+  "short_name": "MaxKit",
+  "description": "图片、GIF、PDF、视频和 AI 抠图全部在本地电脑完成。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbfaf7",
+  "theme_color": "#fbfaf7",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}
